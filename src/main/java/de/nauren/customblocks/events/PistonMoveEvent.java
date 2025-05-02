@@ -42,8 +42,11 @@ public class PistonMoveEvent implements Listener {
                 ItemDisplay itemDisplay = (ItemDisplay) entity;
                 UUID uuid = itemDisplay.getUniqueId();
                 if (!alreadyTeleported.contains(uuid)) {
-                    if (blockLocation.equals(itemDisplay.getLocation())) {
+                    Location itemDisplayLocation = itemDisplay.getLocation();
+                    if (blockLocation.getX() == itemDisplayLocation.getX() && blockLocation.getY() == itemDisplayLocation.getY() && blockLocation.getZ() == itemDisplayLocation.getZ()) {
                         Location location = block.getRelative(blockFace).getLocation();
+                        location.setYaw(itemDisplayLocation.getYaw());
+                        location.setPitch(itemDisplayLocation.getPitch());
                         itemDisplay.teleport(location.add(0.5, 0.5, 0.5));
                         return uuid;
                     }

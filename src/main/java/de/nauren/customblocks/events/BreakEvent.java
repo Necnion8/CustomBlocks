@@ -1,22 +1,19 @@
 package de.nauren.customblocks.events;
 
+import de.nauren.customblocks.util.FileManager;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import de.nauren.customblocks.util.FileManager;
 
 public class BreakEvent implements Listener {
     private final FileManager fileManager;
@@ -50,10 +47,7 @@ public class BreakEvent implements Listener {
                 ItemDisplay itemDisplay = (ItemDisplay) entity;
                 Location itemDisplayLocation = itemDisplay.getLocation();
 
-                itemDisplayLocation.setYaw(blockLocation.getYaw());
-                itemDisplayLocation.setPitch(blockLocation.getPitch());
-
-                if (blockLocation.equals(itemDisplayLocation)) {
+                if (blockLocation.getX() == itemDisplayLocation.getX() && blockLocation.getY() == itemDisplayLocation.getY() && blockLocation.getZ() == itemDisplayLocation.getZ()) {
                     ItemStack displayedItem = itemDisplay.getItemStack();
                     assert displayedItem != null;
                     ItemMeta meta = displayedItem.getItemMeta();

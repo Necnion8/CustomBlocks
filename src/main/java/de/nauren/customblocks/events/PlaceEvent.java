@@ -1,7 +1,10 @@
 package de.nauren.customblocks.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.event.EventHandler;
@@ -10,12 +13,17 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Transformation;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 public class PlaceEvent implements Listener {
+
+    private final boolean is1_19;
+
+    public PlaceEvent() {
+        is1_19 = Bukkit.getBukkitVersion().startsWith("1.19");
+    }
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         ItemStack item = event.getItemInHand();
@@ -31,7 +39,7 @@ public class PlaceEvent implements Listener {
 
                 if (blockLocationData instanceof Directional) {
                     Directional directional = (Directional) blockLocationData;
-                    itemDisplayLocation.setYaw(blockFaceToYaw(directional.getFacing()));
+                    itemDisplayLocation.setYaw(is1_19 ? blockFaceToYaw(directional.getFacing()) + 90f : blockFaceToYaw(directional.getFacing()) - 90f);
                 } else {
                     itemDisplayLocation.setYaw(0.0f);
                 }
